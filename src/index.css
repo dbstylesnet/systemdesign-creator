@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 30% 8%;
+    --foreground: 210 20% 92%;
+
+    --card: 222 25% 12%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 222 25% 14%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 210 100% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 20% 18%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 222 15% 20%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 200 80% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 80% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 70% 42%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 222 20% 18%;
+    --input: 222 20% 18%;
+    --ring: 210 100% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 222 30% 6%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-primary: 210 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 20% 15%;
+    --sidebar-accent-foreground: 210 20% 92%;
+    --sidebar-border: 222 20% 18%;
+    --sidebar-ring: 210 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer utilities {
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(210 100% 55% / 0.3), 0 0 60px hsl(210 100% 55% / 0.1);
+  }
+
+  .glow-success {
+    box-shadow: 0 0 20px hsl(142 70% 42% / 0.4), 0 0 60px hsl(142 70% 42% / 0.15);
+  }
+
+  .glow-destructive {
+    box-shadow: 0 0 20px hsl(0 80% 55% / 0.4), 0 0 60px hsl(0 80% 55% / 0.15);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(222 20% 15% / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(222 20% 15% / 0.5) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
