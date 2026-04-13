@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -6,6 +6,9 @@ interface QuizCardProps {
   label: string;
   image?: string;
   description?: string;
+  /** Icon or graphic shown to the left of the label (quiz answer buttons). */
+  leadingVisual?: ReactNode;
+  layout?: 'vertical' | 'horizontal';
   onClick: () => void;
   disabled?: boolean;
   state?: 'default' | 'correct' | 'incorrect' | 'selected';
@@ -16,20 +19,27 @@ export function QuizCard({
   label,
   image,
   description,
+  leadingVisual,
+  layout = 'vertical',
   onClick,
   disabled = false,
   state = 'default',
   size = 'md',
 }: QuizCardProps) {
+  const horizontal = layout === 'horizontal';
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'relative flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all duration-300 text-card-foreground',
+        'relative flex rounded-lg border-2 transition-all duration-300 text-card-foreground',
         'active:scale-95 touch-manipulation',
-        size === 'lg' && 'p-5 gap-3',
-        size === 'sm' && 'p-3 gap-1.5',
+        horizontal
+          ? 'flex-row items-center gap-3 p-3 text-left w-full min-h-[3.25rem]'
+          : 'flex-col items-center gap-2 p-4',
+        !horizontal && size === 'lg' && 'p-5 gap-3',
+        !horizontal && size === 'sm' && 'p-3 gap-1.5',
         state === 'default' && 'border-border bg-card hover:border-primary/50 hover:glow-primary cursor-pointer',
         state === 'correct' && 'border-success bg-success/10 glow-success animate-enlarge',
         state === 'incorrect' && 'border-destructive bg-destructive/10 glow-destructive animate-shake',
@@ -48,7 +58,18 @@ export function QuizCard({
         </div>
       )}
 
-      {image && (
+      {leadingVisual && (
+        <span
+          className={cn(
+            'flex shrink-0 items-center justify-center rounded-md bg-primary/10',
+            horizontal ? 'p-2' : '',
+          )}
+        >
+          {leadingVisual}
+        </span>
+      )}
+
+      {image && !horizontal && (
         <div className={cn(
           'flex items-center justify-center overflow-hidden rounded-md',
           size === 'lg' ? 'h-24 w-24' : size === 'sm' ? 'h-12 w-12' : 'h-16 w-16',
@@ -61,10 +82,15 @@ export function QuizCard({
         </div>
       )}
 
-      <span className={cn(
-        'font-semibold text-center',
-        size === 'lg' ? 'text-base' : size === 'sm' ? 'text-xs' : 'text-sm',
-      )}>
+      <span
+        className={cn(
+          'font-semibold',
+          horizontal ? 'flex-1 min-w-0 text-sm leading-snug' : 'text-center',
+          !horizontal && size === 'lg' && 'text-base',
+          !horizontal && size === 'sm' && 'text-xs',
+          !horizontal && size === 'md' && 'text-sm',
+        )}
+      >
         {label}
       </span>
 

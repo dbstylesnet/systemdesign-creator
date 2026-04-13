@@ -12,6 +12,7 @@ import {
   type QuizOption,
 } from '@/data/quizData';
 import { cn } from '@/lib/utils';
+import { QuizOptionIcon } from '@/lib/quizOptionIcon';
 
 type Phase = 'project' | 'scale' | 'quiz' | 'summary';
 
@@ -201,11 +202,13 @@ export function QuizFlow() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                 {currentQuestion.options.map(option => (
                   <QuizCard
                     key={option.id}
                     label={option.label}
+                    layout="horizontal"
+                    leadingVisual={<QuizOptionIcon label={option.label} />}
                     onClick={() => handleOptionSelect(option)}
                     state={optionStates[option.id] || 'default'}
                     disabled={answered && optionStates[option.id] !== 'correct'}
