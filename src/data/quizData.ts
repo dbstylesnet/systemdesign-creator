@@ -43,6 +43,51 @@ export const scaleOptions: ScaleInfo[] = [
   { id: 'high', label: 'High Scalability', description: 'Built to handle growing demand', image: '/images/high-scale.png' },
 ];
 
+function padOptionsToEight(questionId: string, options: QuizOption[]): QuizOption[] {
+  if (options.length >= 8) return options;
+
+  const padded: QuizOption[] = [...options];
+
+  const makeFalse = (suffix: string, label: string, explanation: string): QuizOption => ({
+    id: `${questionId}-${suffix}`,
+    label,
+    correct: false,
+    explanation,
+  });
+
+  const fallbacks: QuizOption[] = [
+    makeFalse(
+      'insufficient-context',
+      'Not enough information',
+      'This option represents pausing to gather missing requirements and constraints (traffic, latency, budget, team skills) before choosing a specific technology or architecture.',
+    ),
+    makeFalse(
+      'none-of-the-above',
+      'None of the above',
+      'This option represents rejecting all listed choices. In practice, you would typically pick a concrete tool/pattern from the list (or propose a better alternative with clear justification).',
+    ),
+  ];
+
+  for (const opt of fallbacks) {
+    if (padded.length >= 8) break;
+    // Avoid accidental id collisions if the same suffix already exists.
+    if (padded.some(o => o.id === opt.id)) continue;
+    padded.push(opt);
+  }
+
+  // If still short (future-proof), generate additional false placeholders.
+  while (padded.length < 8) {
+    const idx = padded.length + 1;
+    padded.push(makeFalse(
+      `distractor-${idx}`,
+      `Other (unspecified)`,
+      'This option represents an unspecified alternative. Without a concrete choice and reasoning, it is not a valid answer in this quiz.',
+    ));
+  }
+
+  return padded;
+}
+
 export function getQuestions(project: ProjectType, scale: ScaleType): QuizQuestion[] {
   const questions: Record<ProjectType, QuizQuestion[]> = {
     static: [
@@ -430,7 +475,10 @@ export function getQuestions(project: ProjectType, scale: ScaleType): QuizQuesti
     ],
   };
 
-  return questions[project] || [];
+  return (questions[project] || []).map(q => ({
+    ...q,
+    options: padOptionsToEight(q.id, q.options),
+  }));
 }
 
 export function calculateScore(

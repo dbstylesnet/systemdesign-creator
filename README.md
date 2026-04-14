@@ -1,6 +1,6 @@
-# Sysdesign Pathfinder
+# System Designer
 
-Interactive **system design quiz** for practicing architecture choices. Pick a project profile and scale, then answer scenario-based questions. You get immediate feedback with explanations, a score out of 10, and a short review at the end.
+**System Designer** is an interactive system design quiz for practicing architecture choices. Pick a project type and scale, then answer scenario-based questions. You get immediate feedback (with neutral tips per option), an answer history tracker, a score out of 10, and a short review at the end.
 
 ## What you will practice
 
@@ -30,7 +30,7 @@ You also choose a **scale** profile—**fixed** (predictable traffic) or **high 
 
 4. **Answer the questions**  
    - Each step shows one question and several options.  
-   - **Correct answer:** You see a short explanation and the quiz moves to the next question after a moment.  
+   - **Correct answer:** You see your answer feedback and can continue with **Next question →**.  
    - **Incorrect answer:** You see why it is wrong; try another option until you pick a correct one.  
    - A **progress tracker** at the top reflects your path through the flow.
 
@@ -59,11 +59,7 @@ npm install
 npm run dev
 ```
 
-Or:
-
-```bash
-npm start
-```
+Open the URL shown in the terminal (usually `http://localhost:8080`).
 
 ### Other commands
 
