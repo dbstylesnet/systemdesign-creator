@@ -55,34 +55,86 @@ function padOptionsToEight(questionId: string, options: QuizOption[]): QuizOptio
     explanation,
   });
 
-  const fallbacks: QuizOption[] = [
-    makeFalse(
-      'insufficient-context',
-      'Not enough information',
-      'This option represents pausing to gather missing requirements and constraints (traffic, latency, budget, team skills) before choosing a specific technology or architecture.',
-    ),
-    makeFalse(
-      'none-of-the-above',
-      'None of the above',
-      'This option represents rejecting all listed choices. In practice, you would typically pick a concrete tool/pattern from the list (or propose a better alternative with clear justification).',
-    ),
+  const distractorPool: Array<{ suffix: string; label: string; explanation: string }> = [
+    {
+      suffix: 'fastify',
+      label: 'Fastify',
+      explanation: 'Fastify is a Node.js web framework focused on performance and plugins. It can serve HTTP APIs and server-rendered apps when you need a backend runtime.',
+    },
+    {
+      suffix: 'koa',
+      label: 'Koa',
+      explanation: 'Koa is a minimalist Node.js web framework that composes middleware. It’s a backend server framework rather than a static build/deploy tool.',
+    },
+    {
+      suffix: 'nestjs',
+      label: 'NestJS',
+      explanation: 'NestJS is a TypeScript Node.js framework with modules and DI. It’s used to build backend services and APIs, not as a hosting or build platform by itself.',
+    },
+    {
+      suffix: 'nginx',
+      label: 'Nginx',
+      explanation: 'Nginx is a web server and reverse proxy. It commonly sits in front of apps for TLS termination, caching, and routing, but it isn’t a site generator or application framework.',
+    },
+    {
+      suffix: 'haproxy',
+      label: 'HAProxy',
+      explanation: 'HAProxy is a high-performance load balancer and proxy. It helps distribute traffic and improve availability, but it’s not an application framework or deployment platform.',
+    },
+    {
+      suffix: 'terraform',
+      label: 'Terraform',
+      explanation: 'Terraform is infrastructure-as-code for provisioning cloud resources. It’s used to manage infrastructure, not to directly implement app runtime behavior.',
+    },
+    {
+      suffix: 'pulumi',
+      label: 'Pulumi',
+      explanation: 'Pulumi is infrastructure-as-code using real programming languages. It’s used to provision and manage infra, not to serve application requests directly.',
+    },
+    {
+      suffix: 'kustomize',
+      label: 'Kustomize',
+      explanation: 'Kustomize customizes Kubernetes manifests. It’s an operations/deployment tool, not an application runtime or framework.',
+    },
+    {
+      suffix: 'cloud-run',
+      label: 'Google Cloud Run',
+      explanation: 'Cloud Run is a serverless container platform for running HTTP services. It’s a deployment/runtime choice for backends, not a static site generator.',
+    },
+    {
+      suffix: 'ecs-fargate',
+      label: 'AWS ECS (Fargate)',
+      explanation: 'ECS on Fargate runs containers without managing servers. It’s a deployment/runtime option for services, not a framework or content platform.',
+    },
+    {
+      suffix: 'azure-static-web-apps',
+      label: 'Azure Static Web Apps',
+      explanation: 'Azure Static Web Apps hosts static frontends with CI integration and edge delivery. It’s a hosting option, not an application framework.',
+    },
+    {
+      suffix: 'cloudfront',
+      label: 'AWS CloudFront',
+      explanation: 'CloudFront is a CDN for caching and distributing content globally. It improves delivery, but it doesn’t generate your site or implement backend logic.',
+    },
   ];
 
-  for (const opt of fallbacks) {
-    if (padded.length >= 8) break;
-    // Avoid accidental id collisions if the same suffix already exists.
+  // Deterministic "shuffle" based on questionId.
+  let h = 0;
+  for (let i = 0; i < questionId.length; i++) h = (h * 31 + questionId.charCodeAt(i)) >>> 0;
+
+  const usedSuffixes = new Set(padded.map(o => o.id.replace(`${questionId}-`, '')));
+  let pickIndex = h % distractorPool.length;
+
+  while (padded.length < 8) {
+    const candidate = distractorPool[pickIndex % distractorPool.length];
+    pickIndex++;
+    if (!candidate) continue;
+    if (usedSuffixes.has(candidate.suffix)) continue;
+
+    const opt = makeFalse(candidate.suffix, candidate.label, candidate.explanation);
     if (padded.some(o => o.id === opt.id)) continue;
     padded.push(opt);
-  }
-
-  // If still short (future-proof), generate additional false placeholders.
-  while (padded.length < 8) {
-    const idx = padded.length + 1;
-    padded.push(makeFalse(
-      `distractor-${idx}`,
-      `Other (unspecified)`,
-      'This option represents an unspecified alternative. Without a concrete choice and reasoning, it is not a valid answer in this quiz.',
-    ));
+    usedSuffixes.add(candidate.suffix);
   }
 
   return padded;

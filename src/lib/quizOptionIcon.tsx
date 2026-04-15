@@ -43,6 +43,10 @@ import {
 } from 'lucide-react';
 
 const rules: { test: (l: string) => boolean; Icon: LucideIcon }[] = [
+  { test: l => l.includes('fastify') || l === 'koa' || l.includes('nestjs') || l.includes('nest.js'), Icon: Server },
+  { test: l => l.includes('nginx') || l.includes('haproxy'), Icon: Network },
+  { test: l => l.includes('terraform') || l.includes('pulumi') || l.includes('kustomize'), Icon: Layers },
+  { test: l => l.includes('cloud run') || l.includes('azure static web apps') || l.includes('cloudfront'), Icon: Cloud },
   { test: l => l.includes('jquery'), Icon: Code2 },
   { test: l => l.includes('bash'), Icon: Terminal },
   { test: l => l.includes('csv'), Icon: Table },
