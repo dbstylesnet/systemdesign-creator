@@ -81,4 +81,43 @@
       linear-gradient(90deg, hsl(222 20% 15% / 0.5) 1px, transparent 1px);
     background-size: 40px 40px;
   }
+
+  @keyframes title-text-shadow-pulse {
+    0%, 100% {
+      text-shadow:
+        0 0 10px hsl(var(--info) / 0.18),
+        0 0 22px hsl(var(--success) / 0.10);
+    }
+    50% {
+      text-shadow:
+        0 0 16px hsl(var(--info) / 0.30),
+        0 0 34px hsl(var(--success) / 0.18);
+    }
+  }
+
+  .title-text-shadow-pulse {
+    animation: title-text-shadow-pulse 3.6s ease-in-out infinite;
+  }
+
+  .bmc-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem 0 2rem;
+    padding-right: 1rem;
+  }
+
+  .bmc-button-img {
+    width: 65px;
+    height: auto;
+    display: block;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+    transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+  }
+
+  .bmc-button-img:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    filter: saturate(1.05);
+  }
 }

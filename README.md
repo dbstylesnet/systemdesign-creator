@@ -1,6 +1,8 @@
+<img src="./project.png" alt="ProjectScreenshot" />
+
 # System Designer
 
-**System Designer** is an interactive system design quiz oriented for mobile social media users willing to learn programming and practie architecture choices. User picks a project type and scale, then answer scenario-based questions. User gets immediate feedback (with neutral tips per option), an answer history tracker, a score out of 10, and a short review at the end.
+**System Designer** is an interactive system design quiz oriented for mobile social media users willing to learn programming and practice architecture choices. User picks a project type and scale, then answer scenario-based questions. User gets immediate feedback of his choices and can get tips along the way, at the end the sum up of the created system is given with a score out of 10.
 
 
 ## Local development

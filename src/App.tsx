@@ -20,6 +20,20 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+
+      <footer className="bmc-button-container" aria-label="Support">
+        <a
+          href="https://www.buymeacoffee.com/darkiddle"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            alt="Buy Me A Coffee"
+            className="bmc-button-img"
+          />
+        </a>
+      </footer>
     </TooltipProvider>
   </QueryClientProvider>
 );

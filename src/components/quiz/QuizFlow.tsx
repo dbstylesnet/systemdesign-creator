@@ -174,6 +174,11 @@ export function QuizFlow() {
       <ProgressTracker groups={progressGroups} />
 
       <div className="flex min-h-screen flex-col items-center justify-center px-4 pt-16 pb-8">
+        <h1 className="mb-6 text-center text-3xl font-extrabold tracking-tight">
+          <span className="italic bg-gradient-to-r from-info to-success bg-clip-text text-transparent title-text-shadow-pulse">
+            System Designer
+          </span>
+        </h1>
         <div ref={contentRef} className="w-full max-w-lg animate-slide-up">
           {/* Phase: Project Selection */}
           {phase === 'project' && (
