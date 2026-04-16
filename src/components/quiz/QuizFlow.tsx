@@ -29,6 +29,7 @@ interface OptionState {
 }
 
 interface SelectionTrailItem {
+  stepNumber: number;
   label: string;
   correct: boolean;
 }
@@ -74,11 +75,19 @@ export function QuizFlow() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const progressSteps = [
-    ...(selectedProject ? [{ label: projectTypes.find(p => p.id === selectedProject)?.label || '', tone: 'success' as const }] : []),
-    ...(selectedScale ? [{ label: scaleOptions.find(s => s.id === selectedScale)?.label || '', tone: 'success' as const }] : []),
-    ...selectionTrail.map(s => ({ label: s.label, tone: s.correct ? ('success' as const) : ('error' as const) })),
-  ];
+  const progressGroups = Array.from(
+    selectionTrail.reduce((acc, item) => {
+      const existing = acc.get(item.stepNumber) ?? [];
+      existing.push({
+        label: item.label,
+        tone: item.correct ? ('success' as const) : ('error' as const),
+      });
+      acc.set(item.stepNumber, existing);
+      return acc;
+    }, new Map<number, Array<{ label: string; tone: 'success' | 'error' }>>()),
+  )
+    .sort(([a], [b]) => a - b)
+    .map(([stepNumber, answers]) => ({ stepNumber, answers }));
 
   const handleProjectSelect = useCallback((id: ProjectType) => {
     setSelectedProject(id);
@@ -103,7 +112,7 @@ export function QuizFlow() {
       setFeedbackMessage({ text: `Good choice! ${option.explanation}`, type: 'success' });
       setAnswered(true);
 
-      setSelectionTrail(prev => [...prev, { label: option.label, correct: true }]);
+      setSelectionTrail(prev => [...prev, { stepNumber: currentQuestionIndex + 1, label: option.label, correct: true }]);
       setAnswers(prev => [...prev, {
         question: currentQuestion!,
         selectedOptionId: option.id,
@@ -113,7 +122,7 @@ export function QuizFlow() {
     } else {
       setOptionStates(prev => ({ ...prev, [option.id]: 'incorrect' }));
       setFeedbackMessage({ text: option.explanation, type: 'error' });
-      setSelectionTrail(prev => [...prev, { label: option.label, correct: false }]);
+      setSelectionTrail(prev => [...prev, { stepNumber: currentQuestionIndex + 1, label: option.label, correct: false }]);
 
       // Clear error message after delay
       setTimeout(() => {
@@ -162,7 +171,7 @@ export function QuizFlow() {
 
   return (
     <div className="min-h-screen bg-background grid-bg">
-      <ProgressTracker steps={progressSteps} currentStep={progressSteps.length} />
+      <ProgressTracker groups={progressGroups} />
 
       <div className="flex min-h-screen flex-col items-center justify-center px-4 pt-16 pb-8">
         <div ref={contentRef} className="w-full max-w-lg animate-slide-up">
