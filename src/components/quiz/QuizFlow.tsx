@@ -187,24 +187,27 @@ export function QuizFlow() {
                     size="lg"
                     tip={pt.description}
                     tipActive={activeTip?.id === `project:${pt.id}`}
-                    onTipClick={() => setActiveTip({ id: `project:${pt.id}`, text: pt.description })}
+                    onTipClick={() => setActiveTip({
+                      id: `project:${pt.id}`,
+                      text: `${pt.description} In this quiz, it also determines the baseline assumptions and trade-offs the questions will focus on.`,
+                    })}
                     onClick={() => handleProjectSelect(pt.id)}
                   />
                 ))}
               </div>
               {activeTip && (
                 <div className="mt-4">
-                  <p className="text-xs font-semibold text-muted-foreground mb-1">Tip:</p>
-                  <div className="rounded-lg border border-success/30 bg-success/10 p-3">
+                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
                         <span
                           aria-hidden="true"
-                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success text-success-foreground text-xs font-bold"
+                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-info text-info-foreground text-xs font-bold"
                         >
                           ?
                         </span>
-                        <p className="text-sm text-success leading-snug">{activeTip.text}</p>
+                        <p className="text-sm text-info leading-snug">{activeTip.text}</p>
                       </div>
                     </div>
                   </div>
@@ -234,24 +237,27 @@ export function QuizFlow() {
                     size="lg"
                     tip={s.description}
                     tipActive={activeTip?.id === `scale:${s.id}`}
-                    onTipClick={() => setActiveTip({ id: `scale:${s.id}`, text: s.description })}
+                    onTipClick={() => setActiveTip({
+                      id: `scale:${s.id}`,
+                      text: `${s.description} In this quiz, it changes the scale assumptions behind the recommended architecture trade-offs.`,
+                    })}
                     onClick={() => handleScaleSelect(s.id)}
                   />
                 ))}
               </div>
               {activeTip && (
                 <div className="mt-4">
-                  <p className="text-xs font-semibold text-muted-foreground mb-1">Tip:</p>
-                  <div className="rounded-lg border border-success/30 bg-success/10 p-3">
+                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
                         <span
                           aria-hidden="true"
-                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success text-success-foreground text-xs font-bold"
+                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-info text-info-foreground text-xs font-bold"
                         >
                           ?
                         </span>
-                        <p className="text-sm text-success leading-snug">{activeTip.text}</p>
+                        <p className="text-sm text-info leading-snug">{activeTip.text}</p>
                       </div>
                     </div>
                   </div>
@@ -265,7 +271,7 @@ export function QuizFlow() {
             <>
               <div className="mb-2 text-center">
                 <span className="text-xs font-medium text-muted-foreground">
-                  Question {currentQuestionIndex + 1} of {questions.length}
+                      Step {currentQuestionIndex + 1} of {questions.length}
                 </span>
               </div>
               <div className="mb-6 text-center">
@@ -279,17 +285,17 @@ export function QuizFlow() {
 
               {activeTip && (
                 <div className="mb-4">
-                  <p className="text-xs font-semibold text-muted-foreground mb-1">Tip:</p>
-                  <div className="rounded-lg border border-success/30 bg-success/10 p-3">
+                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
                         <span
                           aria-hidden="true"
-                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-success text-success-foreground text-xs font-bold"
+                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-info text-info-foreground text-xs font-bold"
                         >
                           ?
                         </span>
-                        <p className="text-sm text-success leading-snug">{activeTip.text}</p>
+                        <p className="text-sm text-info leading-snug">{activeTip.text}</p>
                       </div>
                     </div>
                   </div>
@@ -336,7 +342,10 @@ export function QuizFlow() {
                     leadingVisual={<QuizOptionIcon label={option.label} />}
                     tip={option.explanation}
                     tipActive={activeTip?.id === `quiz:${currentQuestion.id}:${option.id}`}
-                    onTipClick={() => setActiveTip({ id: `quiz:${currentQuestion.id}:${option.id}`, text: option.explanation })}
+                    onTipClick={() => setActiveTip({
+                      id: `quiz:${currentQuestion.id}:${option.id}`,
+                      text: `${option.explanation} In system design terms, this choice typically influences your performance/scaling approach and the operational complexity you’ll need to manage.`,
+                    })}
                     onClick={() => handleOptionSelect(option)}
                     state={optionStates[option.id] || 'default'}
                     disabled={answered && optionStates[option.id] !== 'correct'}

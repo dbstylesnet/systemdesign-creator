@@ -66,7 +66,7 @@ export function QuizCard({
             'absolute top-2 right-2 z-40 inline-flex items-center justify-center rounded-full border bg-background/60 backdrop-blur',
             'h-6 w-6 text-muted-foreground hover:text-foreground hover:border-primary/40',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            tipActive && 'text-success border-success/50 bg-success/10',
+            tipActive && 'text-info border-info/50 bg-info/10',
           )}
           onClick={(e) => {
             e.preventDefault();
