@@ -174,10 +174,13 @@ export function QuizFlow() {
       <ProgressTracker groups={progressGroups} />
 
       <div className="flex min-h-screen flex-col items-center justify-center px-4 pt-16 pb-8">
-        <h1 className="mb-6 text-center text-3xl font-extrabold tracking-tight">
-          <span className="italic bg-gradient-to-r from-info to-success bg-clip-text text-transparent title-text-shadow-pulse">
-            System Designer
-          </span>
+        <h1 className="mb-6 flex justify-center">
+          <img
+            src="/logo.png"
+            alt="System Designer"
+            className="h-24 w-auto select-none logo-drop-shadow-pulse"
+            draggable={false}
+          />
         </h1>
         <div ref={contentRef} className="w-full max-w-lg animate-slide-up">
           {/* Phase: Project Selection */}
@@ -185,10 +188,10 @@ export function QuizFlow() {
             <>
               <div className="mb-6 text-center">
                 <h1 className="text-2xl font-bold text-foreground mb-2">
-                  System Design Quiz
+                  Design your System
                 </h1>
                 <p className="text-muted-foreground">
-                  What type of project are you designing?
+                  Choose project
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -235,7 +238,7 @@ export function QuizFlow() {
             <>
               <div className="mb-6 text-center">
                 <h2 className="text-xl font-bold text-foreground mb-2">
-                  What scale are you targeting?
+                  Is your app going to scale?
                 </h2>
                 <p className="text-muted-foreground">
                   This will affect the recommended architecture
