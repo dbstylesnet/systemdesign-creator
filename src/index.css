@@ -99,21 +99,9 @@
     animation: title-text-shadow-pulse 3.6s ease-in-out infinite;
   }
 
-  @keyframes logo-drop-shadow-pulse {
-    0%, 100% {
-      filter:
-        drop-shadow(0 2px 10px hsl(var(--info) / 0.22))
-        drop-shadow(0 2px 18px hsl(var(--success) / 0.12));
-    }
-    50% {
-      filter:
-        drop-shadow(0 2px 16px hsl(var(--info) / 0.34))
-        drop-shadow(0 2px 28px hsl(var(--success) / 0.20));
-    }
-  }
-
-  .logo-drop-shadow-pulse {
-    animation: logo-drop-shadow-pulse 3.6s ease-in-out infinite;
+  .logo-shadow-white {
+    /* Use filter drop-shadow so PNG alpha glows cleanly */
+    filter: drop-shadow(0 0 26px rgba(255, 255, 255, 0.75));
   }
 
   .bmc-button-container {

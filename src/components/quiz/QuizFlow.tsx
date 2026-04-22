@@ -178,7 +178,7 @@ export function QuizFlow() {
           <img
             src="/logo.png"
             alt="System Designer"
-            className="h-24 w-auto select-none logo-drop-shadow-pulse"
+            className="h-24 w-auto select-none logo-shadow-white"
             draggable={false}
           />
         </h1>
