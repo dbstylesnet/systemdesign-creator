@@ -123,11 +123,6 @@ export function QuizFlow() {
       setOptionStates(prev => ({ ...prev, [option.id]: 'incorrect' }));
       setFeedbackMessage({ text: option.explanation, type: 'error' });
       setSelectionTrail(prev => [...prev, { stepNumber: currentQuestionIndex + 1, label: option.label, correct: false }]);
-
-      // Clear error message after delay
-      setTimeout(() => {
-        setFeedbackMessage(null);
-      }, 3000);
     }
   }, [answered, attempts, currentQuestion, currentQuestionIndex, questions.length]);
 
