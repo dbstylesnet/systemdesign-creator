@@ -31,7 +31,7 @@ export interface ScaleInfo {
 
 export const projectTypes: ProjectTypeInfo[] = [
   { id: 'static', label: 'Static Website', description: 'Pre-built HTML/CSS/JS files served directly', image: '/images/static.png' },
-  { id: 'cms', label: 'CMS', description: 'Content Management System for dynamic content', image: '/images/cms.svg' },
+  { id: 'cms', label: 'CMS', description: 'Content Management System for dynamic content', image: '/images/cms.png' },
   { id: 'monolith', label: 'Monolith', description: 'Single unified application codebase', image: '/images/monolith.png' },
   { id: 'microservice', label: 'Microservices', description: 'Distributed independent services', image: '/images/microservice.png' },
   { id: 'spa', label: 'SPA', description: 'Single Page Application with client routing', image: '/images/spa.png' },
