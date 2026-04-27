@@ -76,10 +76,37 @@
   }
 
   .grid-bg {
-    background-image:
-      linear-gradient(hsl(222 20% 15% / 0.5) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(222 20% 15% / 0.5) 1px, transparent 1px);
-    background-size: 40px 40px;
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Aurora mesh: slow-drifting blurred color blobs anchored to the viewport */
+  .grid-bg::before {
+    content: '';
+    position: fixed;
+    inset: -12%;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 105% at 50% -5%, hsl(var(--primary) / 0.45), transparent 78%),
+      radial-gradient(55% 105% at 50% 105%, hsl(220 75% 16% / 0.65), transparent 78%),
+      radial-gradient(50% 40% at 78% 10%, hsl(var(--accent) / 0.40), transparent 70%),
+      radial-gradient(50% 40% at 22% 10%, hsl(var(--accent) / 0.40), transparent 70%);
+    filter: blur(70px) saturate(1.1);
+    animation: aurora-drift 36s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes aurora-drift {
+    0%   { transform: translate3d(-3%, -2%, 0) scale(1.04); }
+    50%  { transform: translate3d(3%,  2%, 0) scale(1.08); }
+    100% { transform: translate3d(-2%, 2%, 0) scale(1.05); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-bg::before {
+      animation: none;
+    }
   }
 
   @keyframes title-text-shadow-pulse {
