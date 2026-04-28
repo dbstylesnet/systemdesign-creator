@@ -1,4 +1,4 @@
-import { Check, X, RotateCcw, Star } from 'lucide-react';
+import { Check, X, RotateCcw, Star, AlertTriangle, Compass } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { calculateScore, type QuizQuestion } from '@/data/quizData';
 
@@ -17,8 +17,18 @@ interface QuizSummaryProps {
 }
 
 export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSummaryProps) {
-  const correctFirstTry = answers.filter(a => a.correct && a.attempts === 1).length;
-  const { score, rating, message } = calculateScore(answers.length, correctFirstTry);
+  const {
+    errorsScore,
+    designScore,
+    finalScore,
+    rating,
+    message,
+    errorsExplanation,
+    designExplanation,
+  } = calculateScore(answers);
+
+  const finalScoreDisplay = Number.isInteger(finalScore) ? finalScore.toString() : finalScore.toFixed(1);
+  const filledStars = Math.round(finalScore / 2); // out of 5
 
   return (
     <div className="min-h-screen bg-background grid-bg px-4 py-20">
@@ -31,14 +41,37 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
                 key={i}
                 className={cn(
                   'h-6 w-6',
-                  i < Math.ceil(score / 2) ? 'fill-primary text-primary' : 'text-muted'
+                  i < filledStars ? 'fill-primary text-primary' : 'text-muted'
                 )}
               />
             ))}
           </div>
-          <div className="text-5xl font-bold text-primary mb-1">{score}/10</div>
+          <div className="text-5xl font-bold text-primary mb-1">{finalScoreDisplay}/10</div>
           <div className="text-lg font-semibold text-foreground">{rating}</div>
           <p className="mt-2 text-sm text-muted-foreground">{message}</p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Final score is a 50/50 weighted average of Errors and Design Quality.
+          </p>
+        </div>
+
+        {/* Score Breakdown */}
+        <div className="mb-6 grid grid-cols-2 gap-3">
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4">
+            <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
+              Errors
+            </div>
+            <div className="mt-1 text-3xl font-bold text-destructive">{errorsScore}<span className="text-base text-muted-foreground">/10</span></div>
+            <p className="mt-1 text-xs text-muted-foreground">{errorsExplanation}</p>
+          </div>
+          <div className="rounded-lg border border-success/30 bg-success/5 p-4">
+            <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <Compass className="h-3.5 w-3.5 text-success" />
+              Design Quality
+            </div>
+            <div className="mt-1 text-3xl font-bold text-success">{designScore}<span className="text-base text-muted-foreground">/10</span></div>
+            <p className="mt-1 text-xs text-muted-foreground">{designExplanation}</p>
+          </div>
         </div>
 
         {/* Project Info */}

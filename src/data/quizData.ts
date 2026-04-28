@@ -533,31 +533,98 @@ export function getQuestions(project: ProjectType, scale: ScaleType): QuizQuesti
   }));
 }
 
-export function calculateScore(
-  totalQuestions: number,
-  correctFirstTry: number
-): { score: number; rating: string; message: string } {
-  const score = Math.round((correctFirstTry / totalQuestions) * 10);
+export interface ScoreInput {
+  /** Total clicks the user made on this question (incorrect + final correct). */
+  attempts: number;
+}
+
+export interface ScoreResult {
+  /** 1–10. Penalises the count of incorrect picks. */
+  errorsScore: number;
+  /** 1–10. Reflects how often clicks landed on a correct option (decision quality). */
+  designScore: number;
+  /** Weighted 50/50 average of the two factors, 1.0–10.0 (one decimal). */
+  finalScore: number;
+  rating: string;
+  message: string;
+  errorsExplanation: string;
+  designExplanation: string;
+  /** Total wrong clicks across the run (for display). */
+  totalErrors: number;
+  /** Total clicks across the run (for display). */
+  totalClicks: number;
+}
+
+const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
+
+export function calculateScore(answers: ScoreInput[]): ScoreResult {
+  const total = answers.length;
+
+  if (total === 0) {
+    return {
+      errorsScore: 1,
+      designScore: 1,
+      finalScore: 1,
+      rating: 'Beginner',
+      message: 'No questions answered yet.',
+      errorsExplanation: 'No data.',
+      designExplanation: 'No data.',
+      totalErrors: 0,
+      totalClicks: 0,
+    };
+  }
+
+  const totalErrors = answers.reduce((sum, a) => sum + Math.max(0, a.attempts - 1), 0);
+  const totalCorrectClicks = total; // one correct click per completed question
+  const totalClicks = answers.reduce((sum, a) => sum + a.attempts, 0);
+
+  // Errors factor: 0 wrong picks → 10, average ≥ 1 wrong pick per question → 1.
+  const errorsRatio = clamp(totalErrors / total, 0, 1);
+  const errorsScore = clamp(Math.round(10 - 9 * errorsRatio), 1, 10);
+
+  // Design factor: ratio of correct picks across ALL clicks → 1–10.
+  const designRatio = totalClicks === 0 ? 0 : totalCorrectClicks / totalClicks;
+  const designScore = clamp(Math.round(1 + 9 * designRatio), 1, 10);
+
+  const finalScoreRaw = (errorsScore + designScore) / 2;
+  const finalScore = Math.round(finalScoreRaw * 10) / 10;
 
   let rating: string;
   let message: string;
-
-  if (score >= 9) {
+  if (finalScore >= 9) {
     rating = 'System Design Master';
-    message = 'Outstanding! You have an excellent understanding of system architecture.';
-  } else if (score >= 7) {
+    message = 'Outstanding. Few errors and consistently strong design choices — you can architect with confidence.';
+  } else if (finalScore >= 7) {
     rating = 'Senior Architect';
-    message = 'Great job! You have solid knowledge with room for some advanced topics.';
-  } else if (score >= 5) {
+    message = 'Strong performance. Most decisions were on point with only minor course corrections.';
+  } else if (finalScore >= 5) {
     rating = 'Mid-Level Developer';
-    message = 'Good foundation! Study the explanations to level up your architecture skills.';
-  } else if (score >= 3) {
+    message = 'A balanced result. Review the explanations on the questions you reconsidered to tighten up future decisions.';
+  } else if (finalScore >= 3) {
     rating = 'Junior Developer';
-    message = 'Keep learning! Review the correct answers and their explanations carefully.';
+    message = 'You are getting there. Focus on understanding why each option fits its scenario before committing.';
   } else {
     rating = 'Beginner';
-    message = 'Everyone starts somewhere! Focus on understanding why each technology choice matters.';
+    message = 'Plenty of room to grow. Re-read the tips and per-question explanations — they map to real industry trade-offs.';
   }
 
-  return { score, rating, message };
+  const errorsExplanation =
+    totalErrors === 0
+      ? `Zero incorrect picks across ${total} question${total === 1 ? '' : 's'}.`
+      : `${totalErrors} incorrect pick${totalErrors === 1 ? '' : 's'} across ${total} question${total === 1 ? '' : 's'}.`;
+
+  const correctPct = Math.round(designRatio * 100);
+  const designExplanation = `${totalCorrectClicks} of ${totalClicks} clicks landed on a correct option (${correctPct}%).`;
+
+  return {
+    errorsScore,
+    designScore,
+    finalScore,
+    rating,
+    message,
+    errorsExplanation,
+    designExplanation,
+    totalErrors,
+    totalClicks,
+  };
 }
