@@ -168,7 +168,7 @@ export function QuizFlow() {
     <div className="min-h-screen bg-background grid-bg">
       <ProgressTracker groups={progressGroups} />
 
-      <div className="flex min-h-screen flex-col items-center justify-center px-4 pt-16 pb-8">
+      <div className="flex min-h-screen flex-col items-center px-4 pt-16 pb-8">
         <h1 className="mb-6 flex justify-center">
           <img
             src="/logo.png"
@@ -183,12 +183,30 @@ export function QuizFlow() {
             <>
               <div className="mb-6 text-center">
                 <h1 className="text-2xl font-bold text-foreground mb-2">
-                  Design your System
+                  What are you building?
                 </h1>
                 <p className="text-muted-foreground">
                   Choose project
                 </p>
               </div>
+              {activeTip && (
+                <div className="mb-4">
+                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <div className="rounded-lg border border-info/30 bg-info/10 p-3">
+                    <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
+                      <div className="flex items-start gap-2">
+                        <span
+                          aria-hidden="true"
+                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-info text-info-foreground text-xs font-bold"
+                        >
+                          ?
+                        </span>
+                        <p className="text-sm text-info leading-snug">{activeTip.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 {projectTypes.map(pt => (
                   <QuizCard
@@ -207,24 +225,6 @@ export function QuizFlow() {
                   />
                 ))}
               </div>
-              {activeTip && (
-                <div className="mt-4">
-                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
-                  <div className="rounded-lg border border-info/30 bg-info/10 p-3">
-                    <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
-                      <div className="flex items-start gap-2">
-                        <span
-                          aria-hidden="true"
-                          className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-info text-info-foreground text-xs font-bold"
-                        >
-                          ?
-                        </span>
-                        <p className="text-sm text-info leading-snug">{activeTip.text}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
 

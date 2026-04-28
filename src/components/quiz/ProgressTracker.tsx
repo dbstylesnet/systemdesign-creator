@@ -47,7 +47,7 @@ export function ProgressTracker({ groups }: ProgressTrackerProps) {
   if (groups.length === 0) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
+    <div className="border-b border-border bg-background/90 backdrop-blur-md">
       <div className="w-full px-3 py-2">
         <div className="mb-1 text-[11px] font-semibold text-muted-foreground">
           Step answers:
