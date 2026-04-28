@@ -232,7 +232,7 @@ export function QuizFlow() {
           {phase === 'scale' && (
             <>
               <div className="mb-6 text-center">
-                <h2 className="text-xl font-bold text-foreground mb-2">
+                <h2 className="text-2xl font-bold text-foreground mb-2">
                   Is your app going to scale?
                 </h2>
                 <p className="text-muted-foreground">
@@ -287,7 +287,7 @@ export function QuizFlow() {
                 </span>
               </div>
               <div className="mb-6 text-center">
-                <h2 className="text-lg font-bold text-foreground mb-1">
+                <h2 className="text-2xl font-bold text-foreground mb-1">
                   {currentQuestion.question}
                 </h2>
                 {currentQuestion.subtitle && (

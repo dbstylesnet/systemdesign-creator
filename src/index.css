@@ -63,6 +63,11 @@
 }
 
 @layer utilities {
+  .text-muted-foreground {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
   .glow-primary {
     box-shadow: 0 0 20px hsl(210 100% 55% / 0.3), 0 0 60px hsl(210 100% 55% / 0.1);
   }
