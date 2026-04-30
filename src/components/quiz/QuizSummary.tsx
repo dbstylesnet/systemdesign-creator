@@ -34,14 +34,14 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
     <div className="min-h-screen bg-background grid-bg px-4 py-20">
       <div className="mx-auto max-w-lg animate-slide-up">
         {/* Score Card */}
-        <div className="mb-6 rounded-xl border-2 border-primary/30 bg-card p-6 text-center glow-primary">
+        <div className="mb-6 rounded-xl border-2 border-primary/40 summary-card-primary p-6 text-center">
           <div className="mb-3 flex justify-center">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
                 className={cn(
                   'h-6 w-6',
-                  i < filledStars ? 'fill-primary text-primary' : 'text-muted'
+                  i < filledStars ? 'fill-yellow-400 text-yellow-400' : 'text-muted'
                 )}
               />
             ))}
@@ -49,14 +49,11 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
           <div className="text-5xl font-bold text-primary mb-1">{finalScoreDisplay}/10</div>
           <div className="text-lg font-semibold text-foreground">{rating}</div>
           <p className="mt-2 text-sm text-muted-foreground">{message}</p>
-          <p className="mt-3 text-xs text-muted-foreground">
-            Final score is a 50/50 weighted average of Errors and Design Quality.
-          </p>
         </div>
 
         {/* Score Breakdown */}
         <div className="mb-6 grid grid-cols-2 gap-3">
-          <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4">
+          <div className="rounded-lg border border-destructive/40 summary-card-error p-4">
             <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
               Errors
@@ -64,7 +61,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
             <div className="mt-1 text-3xl font-bold text-destructive">{errorsScore}<span className="text-base text-muted-foreground">/10</span></div>
             <p className="mt-1 text-xs text-muted-foreground">{errorsExplanation}</p>
           </div>
-          <div className="rounded-lg border border-success/30 bg-success/5 p-4">
+          <div className="rounded-lg border border-success/40 summary-card-success p-4">
             <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               <Compass className="h-3.5 w-3.5 text-success" />
               Design Quality
