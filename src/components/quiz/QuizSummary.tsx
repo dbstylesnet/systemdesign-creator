@@ -34,7 +34,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
     <div className="min-h-screen bg-background grid-bg px-4 py-20">
       <div className="mx-auto max-w-lg animate-slide-up">
         {/* Score Card */}
-        <div className="mb-6 rounded-xl border-2 border-primary/40 summary-card-primary p-6 text-center">
+        <div className="mb-6 rounded-xl border-2 border-info/40 summary-card-info p-6 text-center">
           <div className="mb-3 flex justify-center">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
@@ -46,7 +46,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
               />
             ))}
           </div>
-          <div className="text-5xl font-bold text-primary mb-1">{finalScoreDisplay}/10</div>
+          <div className="text-5xl font-bold text-info mb-1">{finalScoreDisplay}/10</div>
           <div className="text-lg font-semibold text-foreground">{rating}</div>
           <p className="mt-2 text-sm text-muted-foreground">{message}</p>
         </div>
