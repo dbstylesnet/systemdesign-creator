@@ -1,4 +1,4 @@
-[https://systemdesign-creator.vercel.app/](https://systemdesign-creator.vercel.app/)
+[https://systemdesignertool.vercel.app/](https://systemdesignertool.vercel.app/)
 
 <img src="./project.png" alt="ProjectScreenshot" />
 
