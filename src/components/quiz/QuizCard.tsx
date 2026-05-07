@@ -2,6 +2,20 @@ import type { ReactNode } from 'react';
 import { Check, CircleHelp, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+function getOptimizedBasePath(src: string) {
+  if (!src.startsWith('/')) return null;
+  const dot = src.lastIndexOf('.');
+  if (dot <= 0) return null;
+  const noExt = src.slice(0, dot);
+  return `/img-opt${noExt}`;
+}
+
+function getOptimizedSrcSet(src: string, ext: 'avif' | 'webp', widths: number[]) {
+  const base = getOptimizedBasePath(src);
+  if (!base) return null;
+  return widths.map(w => `${base}-${w}.${ext} ${w}w`).join(', ');
+}
+
 interface QuizCardProps {
   label: string;
   image?: string;
@@ -128,11 +142,25 @@ export function QuizCard({
             'flex items-center justify-center overflow-hidden rounded-md',
             size === 'lg' ? 'h-24 w-24' : size === 'sm' ? 'h-12 w-12' : 'h-16 w-16',
           )}>
-            <img
-              src={image}
-              alt={label}
-              className="h-full w-full object-contain"
-            />
+            <picture>
+              <source
+                type="image/avif"
+                srcSet={getOptimizedSrcSet(image, 'avif', [48, 64, 96, 128, 192]) ?? undefined}
+                sizes={size === 'lg' ? '96px' : size === 'sm' ? '48px' : '64px'}
+              />
+              <source
+                type="image/webp"
+                srcSet={getOptimizedSrcSet(image, 'webp', [48, 64, 96, 128, 192]) ?? undefined}
+                sizes={size === 'lg' ? '96px' : size === 'sm' ? '48px' : '64px'}
+              />
+              <img
+                src={image}
+                alt={label}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-contain"
+              />
+            </picture>
           </div>
         )}
 
