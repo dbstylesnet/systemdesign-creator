@@ -33,6 +33,22 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
   return (
     <div className="min-h-screen bg-background grid-bg px-4 py-20">
       <div className="mx-auto max-w-lg animate-slide-up">
+        {/* Project Info */}
+        <div className="mb-8 rounded-lg border border-yellow-400/40 summary-card-meta p-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Project</span>
+              <span className="text-base font-bold text-yellow-400 capitalize">{projectType}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Scale</span>
+              <span className="text-base font-bold text-yellow-400 capitalize">{scale}</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="mb-2 text-sm font-semibold text-foreground">Summary:</p>
+
         {/* Score Card */}
         <div className="mb-6 rounded-xl border-2 border-info/40 summary-card-info p-6 text-center">
           <div className="mb-3 flex justify-center">
@@ -52,7 +68,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
         </div>
 
         {/* Score Breakdown */}
-        <div className="mb-6 grid grid-cols-2 gap-3">
+        <div className="mb-10 grid grid-cols-2 gap-3">
           <div className="rounded-lg border border-destructive/40 summary-card-error p-4">
             <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               <AlertTriangle className="h-3.5 w-3.5 text-destructive" />
@@ -71,22 +87,10 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
           </div>
         </div>
 
-        {/* Project Info */}
-        <div className="mb-6 rounded-lg border border-border bg-card p-4">
-          <div className="flex gap-4 text-sm">
-            <div>
-              <span className="text-muted-foreground">Project: </span>
-              <span className="font-semibold text-foreground capitalize">{projectType}</span>
-            </div>
-            <div>
-              <span className="text-muted-foreground">Scale: </span>
-              <span className="font-semibold text-foreground capitalize">{scale}</span>
-            </div>
-          </div>
-        </div>
+        <p className="mb-2 text-sm font-semibold text-foreground">Your answers:</p>
 
         {/* Answer Review */}
-        <div className="space-y-3 mb-8">
+        <div className="space-y-3 mb-12">
           {answers.map((answer, i) => {
             const selectedOption = answer.question.options.find(o => o.id === answer.selectedOptionId);
             const correctOptions = answer.question.options.filter(o => o.correct);
@@ -106,16 +110,16 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
                 <div className="flex items-start gap-2 mb-2">
                   <div className={cn(
                     'mt-0.5 rounded-full p-0.5 shrink-0',
-                    isFirstTryCorrect ? 'bg-success' : 'bg-muted',
+                    isFirstTryCorrect ? 'bg-success' : 'bg-destructive',
                   )}>
                     {isFirstTryCorrect
                       ? <Check className="h-3 w-3 text-success-foreground" />
-                      : <X className="h-3 w-3 text-muted-foreground" />
+                      : <X className="h-3 w-3 text-destructive-foreground" />
                     }
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground">{answer.question.question}</p>
-                    <p className="text-xs text-primary mt-1">
+                    <p className="text-xs text-yellow-400 mt-1">
                       Your answer: {selectedOption?.label}
                       {answer.attempts > 1 && (
                         <span className="text-muted-foreground"> ({answer.attempts} attempts)</span>
@@ -132,7 +136,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
                       {correctOptions
                         .filter(o => o.id !== answer.selectedOptionId)
                         .map(o => (
-                          <span key={o.id} className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                          <span key={o.id} className="rounded-full border border-success/30 bg-success/15 px-2 py-0.5 text-xs font-medium text-success">
                             {o.label}
                           </span>
                         ))}
@@ -147,7 +151,7 @@ export function QuizSummary({ projectType, scale, answers, onRestart }: QuizSumm
         {/* Restart Button */}
         <button
           onClick={onRestart}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary/10 px-6 py-3 font-semibold text-primary transition-all hover:bg-primary/20 active:scale-95"
+          className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-yellow-400 bg-yellow-400/10 px-6 py-3 font-semibold text-yellow-400 transition-all hover:bg-yellow-400/20 active:scale-95"
         >
           <RotateCcw className="h-4 w-4" />
           Try Another Architecture

@@ -85,6 +85,22 @@
       0 4px 12px hsl(0 0% 0% / 0.40);
   }
 
+  .summary-card-meta {
+    background:
+      radial-gradient(140% 100% at 0% 0%,
+        hsl(48 96% 53% / 0.32) 0%,
+        hsl(48 96% 53% / 0.06) 50%,
+        transparent 75%),
+      linear-gradient(160deg,
+        hsl(45 70% 12% / 0.45) 0%,
+        hsl(var(--card)) 55%);
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.07),
+      inset 0 -1px 0 hsl(0 0% 0% / 0.22),
+      0 10px 24px -10px hsl(48 96% 53% / 0.40),
+      0 2px 6px hsl(0 0% 0% / 0.30);
+  }
+
   .summary-card-error {
     background:
       radial-gradient(140% 100% at 0% 0%,
@@ -182,6 +198,29 @@
 
   .logo-shadow-white {
     filter: drop-shadow(0 0 33px rgba(0, 0, 0, .4));
+  }
+
+  @keyframes gold-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 0 0 hsl(48 96% 53% / 0.55),
+        0 0 14px hsl(48 96% 53% / 0.18);
+    }
+    50% {
+      box-shadow:
+        0 0 0 6px hsl(48 96% 53% / 0),
+        0 0 24px hsl(48 96% 53% / 0.45);
+    }
+  }
+
+  .animate-gold-pulse {
+    animation: gold-pulse 2.6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-gold-pulse {
+      animation: none;
+    }
   }
 
   .bmc-button-container {

@@ -366,14 +366,15 @@ export function QuizFlow() {
               </div>
 
               {answered && optionStates && (
-                <div className="flex justify-end">
+                <div className="mt-8 flex justify-end">
                   <button
                     type="button"
                     onClick={handleNextQuestion}
                     className={cn(
-                      'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold',
-                      'border border-border bg-background text-foreground hover:bg-muted/50 transition-colors',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                      'inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-base font-semibold leading-[1rem]',
+                      'border-2 border-yellow-400 bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/20 transition-colors',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60',
+                      'animate-gold-pulse',
                     )}
                   >
                     {currentQuestionIndex < questions.length - 1 ? 'Next question' : 'View summary'}
