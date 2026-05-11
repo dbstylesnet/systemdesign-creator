@@ -191,7 +191,7 @@ export function QuizFlow() {
               </div>
               {activeTip && (
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <p className="mb-2 text-sm font-semibold text-foreground">Tip:</p>
                   <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
@@ -259,7 +259,7 @@ export function QuizFlow() {
               </div>
               {activeTip && (
                 <div className="mt-4">
-                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <p className="mb-2 text-sm font-semibold text-foreground">Tip:</p>
                   <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
@@ -297,7 +297,7 @@ export function QuizFlow() {
 
               {activeTip && (
                 <div className="mb-4">
-                  <p className="text-sm font-semibold text-muted-foreground mb-1">Tip:</p>
+                  <p className="mb-2 text-sm font-semibold text-foreground">Tip:</p>
                   <div className="rounded-lg border border-info/30 bg-info/10 p-3">
                     <div key={activeTip.id} className="animate-in fade-in-0 duration-200">
                       <div className="flex items-start gap-2">
@@ -317,7 +317,7 @@ export function QuizFlow() {
               {/* Feedback Message */}
               {feedbackMessage && (
                 <div className="mt-2">
-                  <p className="text-xs font-semibold text-muted-foreground mb-1">Your answer:</p>
+                  <p className="mb-2 text-sm font-semibold text-foreground">Your answer:</p>
                   <div className={cn(
                     'rounded-lg border p-3 text-sm animate-scale-in',
                     feedbackMessage.type === 'success'
@@ -344,7 +344,7 @@ export function QuizFlow() {
                 </div>
               )}
 
-              <p className="text-xs font-semibold text-muted-foreground mt-4 mb-2">Options:</p>
+              <p className="mt-12 mb-2 text-sm font-semibold text-foreground">Options:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                 {currentQuestion.options.map(option => (
                   <QuizCard
